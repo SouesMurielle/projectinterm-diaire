@@ -10,6 +10,8 @@ public interface IFavoriteService {
 
     List<Favorite> findAll();
 
+//    public FavoriteItem findOne(long id);
+
     FavoriteItem save(FavoriteDefinition favorite);
 
     void delete(long id);

@@ -23,6 +23,12 @@ public class FavoriteService implements IFavoriteService  {
     public List<Favorite> findAll() {
         return favoriteRepository.findAll();
     }
+//    utile si demande de modifier ? autre ?
+//    public FavoriteItem findOne(long id) {
+//        Favorite favorite = favoriteRepository.findById(id)
+//                .orElseThrow(() -> new NotFoundException("Pas trouvé"));
+//        return new FavoriteItem(favorite.getId(), favorite.getCategory(), favorite.getLabel(), favorite.getLink(), favorite.getDate());
+//    }
 
     @Override
     public FavoriteItem save(FavoriteDefinition favorite) {
@@ -32,10 +38,9 @@ public class FavoriteService implements IFavoriteService  {
 
     @Override
     public void delete(long id) {
-        Favorite favorite = favoriteRepository.findById(id).orElseThrow(() -> NotFoundException("Pas trouvé"));
-        favoriteRepository.delete(id);
+        Favorite favorite = favoriteRepository.findById(id).orElseThrow(() -> new NotFoundException("Pas trouvé"));
+        favoriteRepository.delete(favorite);
     }
 
-    // TODO : Faire findById
 
 }
