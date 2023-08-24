@@ -20,8 +20,10 @@ public class Favorite {
     @Column(name = "id", unique = true, nullable = false)
     private Long id;
 
-    @Column(name = "category", unique = true, nullable = false)
-    private Long category;
+    @Column(name = "category", nullable = false)
+    private String category;
+//    @Column(name = "category", unique = true, nullable = false)
+//    private Long category;
 
     @Column(name = "label", nullable = false)
     private String label;
