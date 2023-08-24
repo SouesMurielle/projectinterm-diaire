@@ -11,4 +11,8 @@ public interface IFavoriteService {
     List<Favorite> findAll();
 
     FavoriteItem save(FavoriteDefinition favorite);
+
+    void delete(long id);
+
+
 }

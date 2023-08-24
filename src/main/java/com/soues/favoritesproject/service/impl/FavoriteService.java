@@ -2,6 +2,7 @@ package com.soues.favoritesproject.service.impl;
 
 import com.soues.favoritesproject.dto.FavoriteDefinition;
 import com.soues.favoritesproject.dto.FavoriteItem;
+import com.soues.favoritesproject.exception.NotFoundException;
 import com.soues.favoritesproject.persistence.entity.Favorite;
 import com.soues.favoritesproject.persistence.repository.IFavoriteRepository;
 import com.soues.favoritesproject.service.IFavoriteService;
@@ -18,7 +19,6 @@ public class FavoriteService implements IFavoriteService  {
         this.favoriteRepository = favoriteRepository;
     }
 
-
     @Override
     public List<Favorite> findAll() {
         return favoriteRepository.findAll();
@@ -30,5 +30,12 @@ public class FavoriteService implements IFavoriteService  {
         return new FavoriteItem(entity.getId(), entity.getCategory(), entity.getLabel(), entity.getLink(), entity.getDate());
     }
 
+    @Override
+    public void delete(long id) {
+        Favorite favorite = favoriteRepository.findById(id).orElseThrow(() -> NotFoundException("Pas trouvé"));
+        favoriteRepository.delete(id);
+    }
+
+    // TODO : Faire findById
 
 }

@@ -18,12 +18,12 @@ public class Favorite {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", unique = true, nullable = false)
-    private Long id;
+    private long id;
 
     @Column(name = "category", nullable = false)
     private String category;
 //    @Column(name = "category", unique = true, nullable = false)
-//    private Long category;
+//    private long category;
 
     @Column(name = "label", length=100, nullable = false)
     private String label;
