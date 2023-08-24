@@ -1,10 +1,10 @@
 package com.soues.favoritesproject.controller;
 
+import com.soues.favoritesproject.dto.FavoriteDefinition;
+import com.soues.favoritesproject.dto.FavoriteItem;
 import com.soues.favoritesproject.persistence.entity.Favorite;
 import com.soues.favoritesproject.service.IFavoriteService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -20,7 +20,16 @@ public class FavoriteController {
 
 
     @GetMapping
-    List<Favorite> findAll() {
-        return favoriteService.findAll();
+    List<FavoriteItem> findAll() {
+        return favoriteService.findAll()
+                .stream()
+                .map(favorite -> new FavoriteItem(favorite.getId(), favorite.getCategory(), favorite.getLink(), favorite.getLabel(), favorite.getDate()))
+                .toList();
     }
+
+    @PostMapping
+    FavoriteItem save(@RequestBody FavoriteDefinition favorite) {
+        return favoriteService.save(favorite);
+    }
+
 }
