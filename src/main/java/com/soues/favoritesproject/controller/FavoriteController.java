@@ -24,9 +24,24 @@ public class FavoriteController {
     List<FavoriteItem> findAll() {
         return favoriteService.findAll()
                 .stream()
-                .map(favorite -> new FavoriteItem(favorite.getId(), favorite.getCategory(), favorite.getLink(), favorite.getLabel(), favorite.getDate()))
+                .map(favorite -> new FavoriteItem(favorite.getId(), favorite.getLink(), favorite.getLabel(), favorite.getDate(), favorite.getCategory()))
                 .toList();
     }
+
+//    @GetMapping(path = "/{id}")
+//    FavoriteItem findOne(@PathVariable long id) {
+//        return favoriteService.findOne(id);
+//    }
+
+
+
+//    @GetMapping(path = "/{category}")
+//    List<FavoriteItem> findByCategory(String category) {
+//        return favoriteService.findByCategory(category)
+//                .stream()
+//                .map(favorite -> new FavoriteItem(favorite.getId(), favorite.getCategory(), favorite.getLabel(), favorite.getLink(), favorite.getDate()))
+//                .toList();
+//    }
 
     @PostMapping
     FavoriteItem save(@RequestBody FavoriteDefinition favorite) {
@@ -35,8 +50,8 @@ public class FavoriteController {
 
     @DeleteMapping(path = "/{id}")
     @ResponseStatus(code = HttpStatus.OK)
-    void delete(@RequestParam long id) {
-        favoriteService.delete(id);
+    void delete(@RequestParam List<Long> listId) {
+        favoriteService.delete(listId);
     }
 
 }
