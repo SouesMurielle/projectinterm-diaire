@@ -35,17 +35,11 @@ public class FavoriteController {
 
 
 
-//    @GetMapping(path = "/{category}")
-//    List<FavoriteItem> findByCategory(String category) {
-//        return favoriteService.findByCategory(category)
-//                .stream()
-//                .map(favorite -> new FavoriteItem(favorite.getId(), favorite.getCategory(), favorite.getLabel(), favorite.getLink(), favorite.getDate()))
-//                .toList();
-//    }
 
-    @PostMapping
-    FavoriteItem save(@RequestBody FavoriteDefinition favorite) {
-        return favoriteService.save(favorite);
+
+    @PostMapping(path = "/{categoryId}/favorite")
+    FavoriteItem save(@RequestBody FavoriteDefinition favorite,@PathVariable(name = "categoryId") Long categoryId) {
+        return favoriteService.save(favorite, categoryId);
     }
 
     @DeleteMapping(path = "/{id}")

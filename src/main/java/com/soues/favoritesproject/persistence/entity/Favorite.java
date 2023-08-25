@@ -18,19 +18,18 @@ public class Favorite {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", unique = true, nullable = false)
-    private long id;
+    private Long id;
 
-    @Column(name = "label", length=100, nullable = false)
+    @Column(name = "label", length=100)
     private String label;
 
-    @Lob
-    @Column(name = "link", nullable = false)
+//    @Lob    // plus lent lors de la navigation sur mysql
+    @Column(name = "link")
     private String link;
 
     @Column(name = "Update_at", columnDefinition = "date")
     private Date date;
 //    columnDefinition : donne des indications à la base de données plutot que ce soit fait "automatiquement"
-
 
     @ManyToOne(optional = false, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(nullable = false)

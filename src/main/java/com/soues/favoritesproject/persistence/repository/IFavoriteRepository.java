@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface IFavoriteRepository extends JpaRepository<Favorite, Long> {
 
-//    @Query("select u from favorites f where f.category = ?1")
-//    List<Favorite> findByCategory(String category);
+    @Query(value = "select u from favorites f where f.category_id = ?1",nativeQuery = true)
+    List<Favorite> findByCategory(long id);
 
 }
