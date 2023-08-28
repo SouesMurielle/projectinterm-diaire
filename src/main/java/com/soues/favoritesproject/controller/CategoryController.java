@@ -6,6 +6,7 @@ import com.soues.favoritesproject.dto.FavoriteItem;
 import com.soues.favoritesproject.persistence.entity.Category;
 import com.soues.favoritesproject.service.ICategoryService;
 import com.soues.favoritesproject.service.IFavoriteService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -14,14 +15,11 @@ import java.util.List;
 @RequestMapping(path = "/api/category")
 public class CategoryController {
 
-    private final ICategoryService categoryService;
+    @Autowired
+    private ICategoryService categoryService;
 
-    private final IFavoriteService favoriteService;
-
-    public CategoryController(ICategoryService categoryService, IFavoriteService favoriteService) {
-        this.categoryService = categoryService;
-        this.favoriteService = favoriteService;
-    }
+    @Autowired
+    private IFavoriteService favoriteService;
 
     @GetMapping
     List<CategoryItem> findAll() {

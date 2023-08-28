@@ -4,6 +4,7 @@ import com.soues.favoritesproject.dto.FavoriteDefinition;
 import com.soues.favoritesproject.dto.FavoriteItem;
 import com.soues.favoritesproject.persistence.entity.Favorite;
 import com.soues.favoritesproject.service.IFavoriteService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,12 +14,8 @@ import java.util.List;
 @RequestMapping(path = "/api/favorite")
 public class FavoriteController {
 
-    private   final IFavoriteService favoriteService;
-
-    public FavoriteController(IFavoriteService favoriteService) {
-        this.favoriteService = favoriteService;
-    }
-
+    @Autowired
+    private IFavoriteService favoriteService;
 
     @GetMapping
     List<FavoriteItem> findAll() {

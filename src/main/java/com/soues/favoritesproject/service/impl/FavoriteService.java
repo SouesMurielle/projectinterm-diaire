@@ -9,6 +9,7 @@ import com.soues.favoritesproject.persistence.repository.ICategoryRepository;
 import com.soues.favoritesproject.persistence.repository.IFavoriteRepository;
 import com.soues.favoritesproject.service.IFavoriteService;
 import jakarta.transaction.Transactional;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -18,17 +19,21 @@ import java.util.List;
 @Transactional
 public class FavoriteService implements IFavoriteService  {
 
-    private final IFavoriteRepository favoriteRepository;
-    private final ICategoryRepository categoryRepository;
+    @Autowired
+    private IFavoriteRepository favoriteRepository;
+    @Autowired
+    private ICategoryRepository categoryRepository;
 
-    public FavoriteService(IFavoriteRepository favoriteRepository, ICategoryRepository categoryRepository) {
-        this.favoriteRepository = favoriteRepository;
-        this.categoryRepository = categoryRepository;
-    }
+//    public FavoriteService(IFavoriteRepository favoriteRepository, ICategoryRepository categoryRepository) {
+//        this.favoriteRepository = favoriteRepository;
+//        this.categoryRepository = categoryRepository;
+//    }
 
     @Override
-    public List<Favorite> findAll() {
-        return favoriteRepository.findAll();
+    public List<FavoriteItem> findAll() {
+        return favoriteRepository.findAll().stream()
+                .map(favorite -> new FavoriteItem(favorite.getId(), favorite.getLabel(),favorite.getLink(), favorite.getDate(), favorite.getCategory()))
+                .toList();
     }
 
 
@@ -39,9 +44,10 @@ public class FavoriteService implements IFavoriteService  {
 //        return new FavoriteItem(favorite.getId(), favorite.getCategory(), favorite.getLabel(), favorite.getLink(), favorite.getDate());
 //    }
 
-    public List<Favorite> findByCategory(long id) {
+    public List<FavoriteItem> findByCategory(long id) {
         return favoriteRepository.findAll()
                 .stream()
+                .map(favorite -> new FavoriteItem(favorite.getId(), favorite.getLabel(), favorite.getLink(), favorite.getDate(),favorite.getCategory()))
                 .filter(favorite -> favorite.getCategory().getId().equals(id))
                 .toList();
     }
