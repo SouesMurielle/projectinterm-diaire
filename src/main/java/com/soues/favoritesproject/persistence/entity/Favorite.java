@@ -31,7 +31,7 @@ public class Favorite {
     private Date date;
 //    columnDefinition : donne des indications à la base de données plutot que ce soit fait "automatiquement"
 
-    @ManyToOne(optional = false, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToOne(optional = false, fetch = FetchType.EAGER)
     @JoinColumn(nullable = false)
     private Category category;
 //    optionnal false signifie qu'on a une relation (11)---(0n)
@@ -42,6 +42,8 @@ public class Favorite {
 //    l'objet est en attente
 //    (fetch) LAZY > on récupère le lien quand on en aura besoin
 
+//    Cascade.NONE (pas une option car c'est le truc par défaut) > meilleure pratique car il vaut mieux définir ce dont
+//    on a besoin plutot que tout avoir en cascade
 //    Cascade ALL correspond à l'ensemble des autres valeurs
 //    Cascade PERSIST on sauvegarde une catégorie quand on sauvegarde un lien
 //    Cascade REMOVE si on supprime un lien, on va supprimer la catégorie (en cascade)
@@ -55,6 +57,19 @@ public class Favorite {
 //    targetEntity : indique ce qu'on lie. Mais redondant car on a déjà l'info avec le type de la variable ci-dessous, ici Category
 
 //    @JoinColum : indique le nom de la clé étrangère. Si ce n'est pas précisé, JPA va le nommer nomdelatable_id par défaut
+//    Autre façon de faire (par rapport au "nullable = false")
+//    Pour la contrainte d'unicité (pas de liens doublons) -> au début du fichier
+//    @Table(name = "favorite", uniqueConstraints = { @UniqueConstraint (name = "UniqueFavoriteLink", columnNames = { "link" }) })
+//    Pour la contrainte de clé étrangère -> sur la colonne correspondante
+//    @JoinColumn(name = "category_id", referencedColumnName = "id", nullable = false, foreignKey = @ForeignKey(name = "FK_CATEGORY_FAVORITE))
+//    @Fetch(FetchMode.JOIN)                -> Au lieu de faire select favorite et select category (si on avait choisi SELECT)
+//                                          -> on fait un join et on a qu'une requete avec les 2 tables liées
+
+
+
+
+
+
 
 //    insertable : false > Interdiction de faire un insert lorsqu'on crée un lien si on indique une catégorie inexistante en base de données
 

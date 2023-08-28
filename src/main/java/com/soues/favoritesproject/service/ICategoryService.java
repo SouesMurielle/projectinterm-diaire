@@ -9,8 +9,6 @@ public interface ICategoryService {
 
     List<Category> findAll();
 
-//    CategoryItem findOne(Long id);
-
     void delete(Long id);
 
     CategoryItem save(CategoryItem category);

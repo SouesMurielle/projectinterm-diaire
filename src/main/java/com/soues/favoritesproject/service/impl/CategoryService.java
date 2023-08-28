@@ -24,11 +24,6 @@ public class CategoryService implements ICategoryService {
         return categoryRepository.findAll();
     }
 
-//    @Override
-//    public CategoryItem findOne(Long id) {
-//        return null;
-//    }
-
     @Override
     public void delete(Long id) {
 
