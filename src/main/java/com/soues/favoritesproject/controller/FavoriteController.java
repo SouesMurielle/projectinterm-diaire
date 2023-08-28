@@ -33,10 +33,6 @@ public class FavoriteController {
 //        return favoriteService.findOne(id);
 //    }
 
-
-
-
-
     @PostMapping(path = "/{categoryId}/favorite")
     FavoriteItem save(@RequestBody FavoriteDefinition favorite,@PathVariable(name = "categoryId") Long categoryId) {
         return favoriteService.save(favorite, categoryId);

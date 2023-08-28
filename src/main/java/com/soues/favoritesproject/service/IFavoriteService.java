@@ -2,17 +2,16 @@ package com.soues.favoritesproject.service;
 
 import com.soues.favoritesproject.dto.FavoriteDefinition;
 import com.soues.favoritesproject.dto.FavoriteItem;
-import com.soues.favoritesproject.persistence.entity.Favorite;
 
 import java.util.List;
 
 public interface IFavoriteService {
 
-    List<Favorite> findAll();
+    List<FavoriteItem> findAll();
 
 //    FavoriteItem findOne(long id);
 
-    List<Favorite> findByCategory(long id);
+    List<FavoriteItem> findByCategory(long id);
 
     FavoriteItem save(FavoriteDefinition favorite, Long categoryId);
 

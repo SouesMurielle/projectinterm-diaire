@@ -2,10 +2,12 @@ package com.soues.favoritesproject.service.impl;
 
 import com.soues.favoritesproject.dto.CategoryDefinition;
 import com.soues.favoritesproject.dto.CategoryItem;
+import com.soues.favoritesproject.dto.FavoriteItem;
 import com.soues.favoritesproject.persistence.entity.Category;
 import com.soues.favoritesproject.persistence.repository.ICategoryRepository;
 import com.soues.favoritesproject.service.ICategoryService;
 import jakarta.transaction.Transactional;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,15 +16,16 @@ import java.util.List;
 @Transactional
 public class CategoryService implements ICategoryService {
 
-    private final ICategoryRepository categoryRepository;
+    @Autowired
+    private ICategoryRepository categoryRepository;
 
-    public CategoryService(ICategoryRepository categoryRepository) {
-        this.categoryRepository = categoryRepository;
-    }
 
     @Override
-    public List<Category> findAll() {
-        return categoryRepository.findAll();
+    public List<CategoryItem> findAll() {
+        return categoryRepository.findAll()
+                .stream()
+                .map(category -> new CategoryItem(category.getId(), category.getLabel()))
+                .toList();
     }
 
     @Override
