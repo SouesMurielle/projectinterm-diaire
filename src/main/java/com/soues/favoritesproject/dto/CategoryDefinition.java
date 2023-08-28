@@ -4,11 +4,11 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-// Class used to get CategoryIem from database (id can't be null)
+// Class used to define Category object (id can be null)
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class CategoryItem {
-    private long id;
+public class CategoryDefinition {
+    private Long id;
     private String label;
 }

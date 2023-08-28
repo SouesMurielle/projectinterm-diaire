@@ -1,5 +1,6 @@
 package com.soues.favoritesproject.service.impl;
 
+import com.soues.favoritesproject.dto.CategoryDefinition;
 import com.soues.favoritesproject.dto.CategoryItem;
 import com.soues.favoritesproject.persistence.entity.Category;
 import com.soues.favoritesproject.persistence.repository.ICategoryRepository;
@@ -25,12 +26,12 @@ public class CategoryService implements ICategoryService {
     }
 
     @Override
-    public void delete(Long id) {
+    public void delete(long id) {
 
     }
 
     @Override
-    public CategoryItem save(CategoryItem category) {
+    public CategoryItem save(CategoryDefinition category) {
         Category entity = categoryRepository.save(new Category(category.getId(), category.getLabel()));
         return new CategoryItem(entity.getId(), entity.getLabel());
     }

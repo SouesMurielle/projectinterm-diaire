@@ -39,7 +39,7 @@ public class FavoriteService implements IFavoriteService  {
 //        return new FavoriteItem(favorite.getId(), favorite.getCategory(), favorite.getLabel(), favorite.getLink(), favorite.getDate());
 //    }
 
-    public List<Favorite> findByCategory(Long id) {
+    public List<Favorite> findByCategory(long id) {
         return favoriteRepository.findAll()
                 .stream()
                 .filter(favorite -> favorite.getCategory().getId().equals(id))

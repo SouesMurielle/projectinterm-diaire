@@ -1,5 +1,6 @@
 package com.soues.favoritesproject.service;
 
+import com.soues.favoritesproject.dto.CategoryDefinition;
 import com.soues.favoritesproject.dto.CategoryItem;
 import com.soues.favoritesproject.persistence.entity.Category;
 
@@ -9,7 +10,7 @@ public interface ICategoryService {
 
     List<Category> findAll();
 
-    void delete(Long id);
+    void delete(long id);
 
-    CategoryItem save(CategoryItem category);
+    CategoryItem save(CategoryDefinition category);
 }

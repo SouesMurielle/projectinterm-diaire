@@ -1,5 +1,6 @@
 package com.soues.favoritesproject.controller;
 
+import com.soues.favoritesproject.dto.CategoryDefinition;
 import com.soues.favoritesproject.dto.CategoryItem;
 import com.soues.favoritesproject.dto.FavoriteItem;
 import com.soues.favoritesproject.persistence.entity.Category;
@@ -44,8 +45,8 @@ public class CategoryController {
 //                .toList();
     }
 
-    @PostMapping
-    CategoryItem save(@RequestBody CategoryItem category) {
+    @PostMapping(path = "/category")
+    CategoryItem save(@RequestBody CategoryDefinition category) {
         return categoryService.save(category);
     }
 

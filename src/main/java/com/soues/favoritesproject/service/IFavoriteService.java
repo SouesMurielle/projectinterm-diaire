@@ -12,7 +12,7 @@ public interface IFavoriteService {
 
 //    FavoriteItem findOne(long id);
 
-    List<Favorite> findByCategory(Long id);
+    List<Favorite> findByCategory(long id);
 
     FavoriteItem save(FavoriteDefinition favorite, Long categoryId);
 
