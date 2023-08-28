@@ -8,6 +8,7 @@ import com.soues.favoritesproject.persistence.entity.Favorite;
 import com.soues.favoritesproject.persistence.repository.ICategoryRepository;
 import com.soues.favoritesproject.persistence.repository.IFavoriteRepository;
 import com.soues.favoritesproject.service.IFavoriteService;
+import com.soues.favoritesproject.utils.DTOHelper;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,20 +25,22 @@ public class FavoriteService implements IFavoriteService  {
     @Autowired
     private ICategoryRepository categoryRepository;
 
-//    public FavoriteService(IFavoriteRepository favoriteRepository, ICategoryRepository categoryRepository) {
-//        this.favoriteRepository = favoriteRepository;
-//        this.categoryRepository = categoryRepository;
-//    }
+    private DTOHelper helper = new DTOHelper() ;
 
     @Override
     public List<FavoriteItem> findAll() {
         return favoriteRepository.findAll().stream()
-                .map(favorite -> new FavoriteItem(favorite.getId(), favorite.getLabel(),favorite.getLink(), favorite.getDate(), favorite.getCategory()))
+                .map(favorite -> helper.toFavoriteItem(favorite))
                 .toList();
     }
+//    @Override
+//    public List<FavoriteItem> findAll() {
+//        return favoriteRepository.findAll().stream()
+//                .map(favorite -> new FavoriteItem(favorite.getId(), favorite.getLabel(),favorite.getLink(), favorite.getDate(), favorite.getCategory()))
+//                .toList();
+//    }
 
 
-//    utile si demande de modifier ? autre ?
 //    public FavoriteItem findOne(long id) {
 //        Favorite favorite = favoriteRepository.findById(id)
 //                .orElseThrow(() -> new NotFoundException("Pas trouvé"));
@@ -63,10 +66,11 @@ public class FavoriteService implements IFavoriteService  {
             entity = favoriteRepository.findById(categoryId)
                     .orElseThrow(() -> new NotFoundException("Pas trouvé"));
         } else {
-            entity = new Favorite(favorite.getId(), favorite.getLabel(), favorite.getLink(),
-                    new Date(), category);
+            entity = new Favorite();
         }
 
+        entity = new Favorite(favorite.getId(), favorite.getLabel(), favorite.getLink(),
+                new Date(), category);
         entity = favoriteRepository.save(entity);
 
         return new FavoriteItem(entity.getId(), entity.getLabel(), entity.getLink(),

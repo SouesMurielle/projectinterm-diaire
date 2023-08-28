@@ -32,7 +32,7 @@ public class FavoriteController {
 //    }
 
     @PostMapping(path = "/{categoryId}/favorite")
-    FavoriteItem save(@RequestBody FavoriteDefinition favorite,@PathVariable(name = "categoryId") Long categoryId) {
+    FavoriteItem save(@RequestBody FavoriteDefinition favorite, @PathVariable(name = "categoryId") long categoryId) {
         return favoriteService.save(favorite, categoryId);
     }
 
