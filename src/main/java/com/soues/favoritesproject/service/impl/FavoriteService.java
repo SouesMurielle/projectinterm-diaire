@@ -74,14 +74,16 @@ public class FavoriteService implements IFavoriteService  {
     }
 
     @Override
-    public void delete(List<Long> listId) {
-        listId.forEach(id -> favoriteRepository.deleteById(id));
+    public void delete(long id) {
+        Favorite favorite = favoriteRepository.findById(id).orElseThrow(() -> new NotFoundException("Pas trouvé"));
+            favoriteRepository.deleteById(favorite.getId());
+    }
 
-//        for (Long id:
-//             listId) {
-//            Favorite favorite = favoriteRepository.findById(id).orElseThrow(() -> new NotFoundException("Pas trouvé"));
-//            favoriteRepository.delete(favorite);
-//        }
+    @Override
+    public void deleteMultiple(List<Long> ids) {
+
+        ids.forEach(this::delete);
+        //ids.forEach(id -> delete(id));
     }
 
 

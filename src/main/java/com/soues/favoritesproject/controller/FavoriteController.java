@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Arrays;
 import java.util.List;
 
 @RestController
@@ -35,10 +36,11 @@ public class FavoriteController {
         return favoriteService.save(favorite, categoryId);
     }
 
-    @DeleteMapping(path = "/{id}")
+    @DeleteMapping(path = "/{ids}")
     @ResponseStatus(code = HttpStatus.OK)
-    void delete(@RequestParam List<Long> listId) {
-        favoriteService.delete(listId);
-    }
+    void delete(@PathVariable String ids) {
 
+        favoriteService.deleteMultiple(Arrays.stream(ids.split("-")).map(Long::valueOf).toList());
+    }
+// todo qu'est-ce que sont les ::
 }

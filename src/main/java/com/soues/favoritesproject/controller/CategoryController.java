@@ -36,14 +36,9 @@ public class CategoryController {
                 .map(favorite -> new FavoriteItem(favorite.getId(),
                         favorite.getLabel(), favorite.getLink(), favorite.getDate(), favorite.getCategory()))
                 .toList();
-//        return favoriteService.findByCategory(id)
-//                .stream()
-//                .map(favorite -> new FavoriteItem(favorite.getId(),
-//                favorite.getLabel(), favorite.getLink(), favorite.getDate(), favorite.getCategory()))
-//                .toList();
     }
 
-    @PostMapping(path = "/category")
+    @PostMapping
     CategoryItem save(@RequestBody CategoryDefinition category) {
         return categoryService.save(category);
     }
