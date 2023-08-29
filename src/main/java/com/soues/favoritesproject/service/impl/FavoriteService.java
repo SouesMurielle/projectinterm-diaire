@@ -57,24 +57,24 @@ public class FavoriteService implements IFavoriteService  {
     }
 
     @Override
-    public FavoriteItem save(FavoriteDefinition favorite, Long categoryId) {
+    public FavoriteItem save(FavoriteDefinition definition, Long categoryId) {
         Category category = categoryRepository.findById(categoryId)
                 .orElseThrow(() -> new NotFoundException("Pas trouvé"));
 
-        Favorite entity;
+        Favorite favorite;
 
-        if (favorite.getId() != null) {
-            entity = favoriteRepository.findById(categoryId)
+        if (definition.getId() != null) {
+            favorite = favoriteRepository.findById(categoryId)
                     .orElseThrow(() -> new NotFoundException("Pas trouvé"));
         } else {
-            entity = new Favorite();
+            favorite = new Favorite();
         }
 
-        entity = new Favorite(favorite.getId(), favorite.getLabel(), favorite.getLink(),
+        favorite = new Favorite(definition.getId(), definition.getLabel(), definition.getLink(),
                 new Date(), category);
-        entity = favoriteRepository.save(entity);
+        favorite = favoriteRepository.save(favorite);
 
-        return new FavoriteItem(entity.getId(), entity.getLabel(), entity.getLink(),
+        return new FavoriteItem(favorite.getId(), favorite.getLabel(), favorite.getLink(),
                 new Date(), category);
     }
 
@@ -86,7 +86,6 @@ public class FavoriteService implements IFavoriteService  {
 
     @Override
     public void deleteMultiple(List<Long> ids) {
-
         ids.forEach(this::delete);
         //ids.forEach(id -> delete(id));
     }

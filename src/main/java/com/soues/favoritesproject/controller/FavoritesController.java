@@ -19,10 +19,7 @@ public class FavoritesController {
 
     @GetMapping(path = "/favorite")
     List<FavoriteItem> findAll() {
-        return favoriteService.findAll()
-                .stream()
-                .map(favorite -> new FavoriteItem(favorite.getId(), favorite.getLink(), favorite.getLabel(), favorite.getDate(), favorite.getCategory()))
-                .toList();
+        return favoriteService.findAll();
     }
 
 //    @GetMapping(path = "/{id}")
@@ -35,10 +32,9 @@ public class FavoritesController {
         return favoriteService.save(favorite, categoryId);
     }
 
-    @DeleteMapping(path = "favorite/{ids}")
+    @DeleteMapping(path = "/favorite/{ids}")
     @ResponseStatus(code = HttpStatus.OK)
     void delete(@PathVariable String ids) {
-
         favoriteService.deleteMultiple(Arrays.stream(ids.split("-")).map(Long::valueOf).toList());
     }
 

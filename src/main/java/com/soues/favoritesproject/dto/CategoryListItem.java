@@ -1,5 +1,6 @@
 package com.soues.favoritesproject.dto;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -11,5 +12,6 @@ import lombok.NoArgsConstructor;
 public class CategoryListItem {
     private long id;
     private String label;
+    @Schema(name = "references", description = "The number of usages of this category")
     private long references;
 }
