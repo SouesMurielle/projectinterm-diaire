@@ -21,8 +21,7 @@ public class DTOHelper {
     @Autowired
     private IFavoriteRepository favoriteRepository;
 
-    @Autowired
-    private ModelMapper mapper;
+    private ModelMapper mapper = new ModelMapper();
 
 
     public CategoryListItem toCategoryToListItem (Category entity) {

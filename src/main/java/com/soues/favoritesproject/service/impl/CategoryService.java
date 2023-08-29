@@ -13,6 +13,7 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Comparator;
 import java.util.List;
 
 @Service
@@ -29,9 +30,17 @@ public class CategoryService implements ICategoryService {
     public List<CategoryListItem> findAll() {
         return categoryRepository.findAll()
                 .stream()
+                .sorted(Comparator.comparing(Category::getLabel))
                 .map(helper::toCategoryToListItem)
                 .toList();
+//        return  categoryRepository.findAll()
+//                .stream()
+//                .sorted(Comparator.comparing(Category::getLabel))
+//                .map(category -> helper.toCategoryToListItem(category))
+//                .toList();
     }
+
+
 
     @Override
     public void delete(long id) {

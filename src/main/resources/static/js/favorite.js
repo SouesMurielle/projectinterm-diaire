@@ -45,7 +45,6 @@ angular.module('favoriteApp', [])
             $http.get('api/category').then(
                 function(response) {
 
-
                     $scope.categories = [{id: 0, label: "All", references: 0}];
                     response.data.forEach(d => {
                         $scope.categories.push(d);
