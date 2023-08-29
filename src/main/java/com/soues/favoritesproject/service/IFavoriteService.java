@@ -5,6 +5,7 @@ import com.soues.favoritesproject.dto.FavoriteItem;
 
 import java.util.List;
 
+// pas d'annotations car c'est une classe que nous faisons nous même, ce n'est pas géré par Spring
 public interface IFavoriteService {
 
     List<FavoriteItem> findAll();

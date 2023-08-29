@@ -30,7 +30,7 @@ angular.module('favoriteApp', [])
         }
 
         $scope.validate = function() {
-            $http.post('api/category/' + $scope.favorite.category + '/favorite' , { id: null, link: $scope.favorite.link }).then(
+            $http.post('api/' + $scope.favorite.category + '/favorite' , { id: null, link: $scope.favorite.link }).then(
                 function() {
                     $scope.refresh();
                     $scope.setMode('view');
@@ -42,12 +42,8 @@ angular.module('favoriteApp', [])
 
         $scope.refresh = function() {
 
-        console.log("pouet");
-
             $http.get('api/category').then(
                 function(response) {
-
-                console.log(response);
 
 
                     $scope.categories = [{id: 0, label: "All", references: 0}];
@@ -57,6 +53,7 @@ angular.module('favoriteApp', [])
 
                     $http.get('api/favorite').then(
                         function(response) {
+                        console.log(response)   ;
                             $scope.favorites = response.data.filter(f => $scope.categoryFilter === 0 || f.category.id === $scope.selectedCategory);
                         }
                     )
