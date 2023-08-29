@@ -41,16 +41,16 @@ public class FavoriteService implements IFavoriteService  {
 //    }
 
 
-//    public FavoriteItem findOne(long id) {
-//        Favorite favorite = favoriteRepository.findById(id)
-//                .orElseThrow(() -> new NotFoundException("Pas trouvé"));
-//        return new FavoriteItem(favorite.getId(), favorite.getCategory(), favorite.getLabel(), favorite.getLink(), favorite.getDate());
-//    }
+    public FavoriteItem findOne(long id) {
+        Favorite favorite = favoriteRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Pas trouvé"));
+        return helper.toFavoriteItem(favorite);
+    }
 
     public List<FavoriteItem> findByCategory(long id) {
         return favoriteRepository.findAll()
                 .stream()
-                .map(favorite -> new FavoriteItem(favorite.getId(), favorite.getLabel(), favorite.getLink(), favorite.getDate(),favorite.getCategory()))
+                .map(favorite -> helper.toFavoriteItem(favorite))
                 .filter(favorite -> favorite.getCategory().getId().equals(id))
                 .toList();
     }

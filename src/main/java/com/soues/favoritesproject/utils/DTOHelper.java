@@ -39,6 +39,8 @@ public class DTOHelper {
         return mapper.map(entity, CategoryItem.class);
     }
 
-
+    public Favorite toFavorite(FavoriteItem entity) {
+        return mapper.map(entity,Favorite.class);
+    }
 
 }

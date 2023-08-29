@@ -9,7 +9,7 @@ public interface IFavoriteService {
 
     List<FavoriteItem> findAll();
 
-//    FavoriteItem findOne(long id);
+    FavoriteItem findOne(long id);
 
     List<FavoriteItem> findByCategory(long id);
 

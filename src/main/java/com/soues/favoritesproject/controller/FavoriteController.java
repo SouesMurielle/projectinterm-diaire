@@ -12,7 +12,7 @@ import java.util.Arrays;
 import java.util.List;
 
 @RestController
-@RequestMapping(path = "/api/favorite")
+@RequestMapping(path = "/api")
 public class FavoriteController {
 
     @Autowired
