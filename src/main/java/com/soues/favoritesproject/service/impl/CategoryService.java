@@ -2,6 +2,7 @@ package com.soues.favoritesproject.service.impl;
 
 import com.soues.favoritesproject.dto.CategoryDefinition;
 import com.soues.favoritesproject.dto.CategoryItem;
+import com.soues.favoritesproject.dto.CategoryListItem;
 import com.soues.favoritesproject.dto.FavoriteItem;
 import com.soues.favoritesproject.persistence.entity.Category;
 import com.soues.favoritesproject.persistence.repository.ICategoryRepository;
@@ -20,13 +21,14 @@ public class CategoryService implements ICategoryService {
     @Autowired
     private ICategoryRepository categoryRepository;
 
+    @Autowired
     private DTOHelper helper;
 
     @Override
-    public List<CategoryItem> findAll() {
+    public List<CategoryListItem> findAll() {
         return categoryRepository.findAll()
                 .stream()
-                .map(category -> helper.toCategoryItem(category))
+                .map(helper::toCategoryToListItem)
                 .toList();
     }
 
@@ -37,7 +39,7 @@ public class CategoryService implements ICategoryService {
 
     @Override
     public CategoryItem save(CategoryDefinition category) {
-        Category entity = categoryRepository.save(new Category(category.getId(), category.getLabel()));
+        Category entity = categoryRepository.save(helper.toCategory(category));
         return helper.toCategoryItem(entity);
     }
 }

@@ -2,18 +2,19 @@ package com.soues.favoritesproject.controller;
 
 import com.soues.favoritesproject.dto.CategoryDefinition;
 import com.soues.favoritesproject.dto.CategoryItem;
+import com.soues.favoritesproject.dto.CategoryListItem;
 import com.soues.favoritesproject.dto.FavoriteItem;
-import com.soues.favoritesproject.persistence.entity.Category;
 import com.soues.favoritesproject.service.ICategoryService;
 import com.soues.favoritesproject.service.IFavoriteService;
+import com.soues.favoritesproject.utils.DTOHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping(path = "/api/category")
-public class CategoryController {
+@RequestMapping(path = "/api")
+public class CategoriesController {
 
     @Autowired
     private ICategoryService categoryService;
@@ -21,12 +22,10 @@ public class CategoryController {
     @Autowired
     private IFavoriteService favoriteService;
 
-    @GetMapping
-    List<CategoryItem> findAll() {
+    @GetMapping(path = "/category")
+    List<CategoryListItem> findAll() {
         return categoryService.findAll()
-                .stream()
-                .map(category -> new CategoryItem(category.getId(), category.getLabel()))
-                .toList();
+                ;
     }
 
     @GetMapping(path = "/{category}")

@@ -2,7 +2,6 @@ package com.soues.favoritesproject.controller;
 
 import com.soues.favoritesproject.dto.FavoriteDefinition;
 import com.soues.favoritesproject.dto.FavoriteItem;
-import com.soues.favoritesproject.persistence.entity.Favorite;
 import com.soues.favoritesproject.service.IFavoriteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,12 +12,12 @@ import java.util.List;
 
 @RestController
 @RequestMapping(path = "/api")
-public class FavoriteController {
+public class FavoritesController {
 
     @Autowired
     private IFavoriteService favoriteService;
 
-    @GetMapping
+    @GetMapping(path = "/favorite")
     List<FavoriteItem> findAll() {
         return favoriteService.findAll()
                 .stream()
@@ -36,11 +35,11 @@ public class FavoriteController {
         return favoriteService.save(favorite, categoryId);
     }
 
-    @DeleteMapping(path = "/{ids}")
+    @DeleteMapping(path = "favorite/{ids}")
     @ResponseStatus(code = HttpStatus.OK)
     void delete(@PathVariable String ids) {
 
         favoriteService.deleteMultiple(Arrays.stream(ids.split("-")).map(Long::valueOf).toList());
     }
-// todo qu'est-ce que sont les ::
+
 }

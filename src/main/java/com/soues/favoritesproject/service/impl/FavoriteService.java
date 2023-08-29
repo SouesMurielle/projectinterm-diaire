@@ -25,12 +25,13 @@ public class FavoriteService implements IFavoriteService  {
     @Autowired
     private ICategoryRepository categoryRepository;
 
-    private DTOHelper helper = new DTOHelper() ;
+    @Autowired
+    private  DTOHelper helper;
 
     @Override
     public List<FavoriteItem> findAll() {
         return favoriteRepository.findAll().stream()
-                .map(favorite -> helper.toFavoriteItem(favorite))
+                .map(helper::toFavoriteItem)
                 .toList();
     }
 //    @Override
@@ -50,7 +51,7 @@ public class FavoriteService implements IFavoriteService  {
     public List<FavoriteItem> findByCategory(long id) {
         return favoriteRepository.findAll()
                 .stream()
-                .map(favorite -> helper.toFavoriteItem(favorite))
+                .map(helper::toFavoriteItem)
                 .filter(favorite -> favorite.getCategory().getId().equals(id))
                 .toList();
     }

@@ -1,5 +1,6 @@
 package com.soues.favoritesproject.utils;
 
+import com.soues.favoritesproject.dto.CategoryDefinition;
 import com.soues.favoritesproject.dto.CategoryItem;
 import com.soues.favoritesproject.dto.CategoryListItem;
 import com.soues.favoritesproject.dto.FavoriteItem;
@@ -9,7 +10,9 @@ import com.soues.favoritesproject.persistence.repository.ICategoryRepository;
 import com.soues.favoritesproject.persistence.repository.IFavoriteRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
+@Component
 public class DTOHelper {
 
     @Autowired
@@ -19,6 +22,7 @@ public class DTOHelper {
     private IFavoriteRepository favoriteRepository;
 
     private ModelMapper mapper = new ModelMapper();
+
 
     public CategoryListItem toCategoryToListItem (Category entity) {
         CategoryListItem dto = mapper.map(entity, CategoryListItem.class);
@@ -43,4 +47,7 @@ public class DTOHelper {
         return mapper.map(entity,Favorite.class);
     }
 
+    public Category toCategory(CategoryDefinition entity) {
+        return mapper.map(entity, Category.class);
+    }
 }
