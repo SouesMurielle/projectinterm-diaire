@@ -5,7 +5,9 @@ angular
 		$scope.realCategories = [];
 		$scope.favorites = [];
 
-		$scope.categoryFilter = 0;
+		$scope.category= {
+		    filter : 0
+		};
 
 		$scope.mode = "view";
 
@@ -20,7 +22,7 @@ angular
 					.map(function (c) {
 						return c.id;
 					})
-					.indexOf($scope.categoryFilter);
+					.indexOf($scope.category.filter);
 				if (idx < 0) idx = 0;
 
 				$scope.favorite = {
@@ -53,36 +55,30 @@ angular
 				);
 		};
 
-		// $scope.filterFavorites = function () {
-		// 	$http.get("api/category/").then(function(response){
-		// 		console.log("111111" + $scope.favorite.category)
-		// 		$http.get("api/category/" + $scope.favorite.category).then(
-		// 		                function(response) {
-		// 		                    console.log(response);
-		// 		                }
-		// 		            )
-
-		//     }
-		// 	);
-		// };
-
 		$scope.refresh = function () {
 			$http.get("api/category").then(function (response) {
 				$scope.categories = [{ id: 0, label: "All", references: 0 }];
 				response.data.forEach((d) => {
 					$scope.categories.push(d);
+					$scope.categories[0].references += d.references;
 				});
 
 				$http.get("api/favorite").then(function (response) {
 					console.log(response);
+					console.log($scope.category.filter);
 					$scope.favorites = response.data.filter(
 						(f) =>
-							$scope.categoryFilter === 0 ||
-							f.category.id === $scope.selectedCategory
+							$scope.category.filter === 0 ||
+							f.category.id === $scope.category.filter
 					);
 				});
 			});
 		};
 
+
+        $scope.format = function(item) {
+            return (item.label + (item.id != -1 ? ' (' + item.references + ')' : ''));
+//            return (item.label + (item.id != 0 ? ' (' + item.references + ')' : ''));
+        }
 		$scope.refresh();
 	});
