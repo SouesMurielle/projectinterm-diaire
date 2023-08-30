@@ -1,64 +1,88 @@
-angular.module('favoriteApp', [])
-    .controller('FavoritesController', function($scope, $http) {
+angular
+	.module("favoriteApp", [])
+	.controller("FavoritesController", function ($scope, $http) {
+		$scope.categories = [];
+		$scope.realCategories = [];
+		$scope.favorites = [];
 
-        $scope.categories = [];
-        $scope.realCategories = [];
-        $scope.favorites = [];
+		$scope.categoryFilter = 0;
 
-        $scope.categoryFilter = 0;
+		$scope.mode = "view";
 
-        $scope.mode = 'view';
+		$scope.favorite = {};
 
-        $scope.favorite = {};
+		$scope.setMode = function (text) {
+			if (text === "creation") {
+				$scope.realCategories = $scope.categories.filter(function (c) {
+					return c.id !== 0;
+				});
+				var idx = $scope.realCategories
+					.map(function (c) {
+						return c.id;
+					})
+					.indexOf($scope.categoryFilter);
+				if (idx < 0) idx = 0;
 
-        $scope.setMode = function(text) {
-            if (text === 'creation') {
-                $scope.realCategories = $scope.categories.filter(function(c) { return c.id !== 0 });
-                var idx = $scope.realCategories.map(function(c) { return c.id }).indexOf($scope.categoryFilter);
-                if (idx < 0) idx = 0;
+				$scope.favorite = {
+					link: "",
+					category: $scope.realCategories[idx].id,
+				};
+			}
+			$scope.mode = text;
+		};
 
-                $scope.favorite = {
-                    link: '',
-                    category: $scope.realCategories[idx].id
-                }
-            }
-            $scope.mode = text;
-        }
+		$scope.cancel = function () {
+			$scope.setMode("view");
+		};
 
-        $scope.cancel = function() {
-            $scope.setMode('view');
-        }
+		$scope.validate = function () {
+			$http
+				.post("api/" + $scope.favorite.category + "/favorite", {
+					id: null,
+					label: $scope.favorite.label,
+					link: $scope.favorite.link,
+				})
+				.then(
+					function () {
+						$scope.refresh();
+						$scope.setMode("view");
+					},
+					function (error) {
+						alert(error.data.message);
+					}
+				);
+		};
 
-        $scope.validate = function() {
-            $http.post('api/' + $scope.favorite.category + '/favorite' , { id: null, link: $scope.favorite.link }).then(
-                function() {
-                    $scope.refresh();
-                    $scope.setMode('view');
-                }, function(error) {
-                    alert(error.data.message);
-                }
-            )
-        }
+		// $scope.filterFavorites = function () {
+		// 	$http.get("api/category/").then(function(response){
+		// 		console.log("111111" + $scope.favorite.category)
+		// 		$http.get("api/category/" + $scope.favorite.category).then(
+		// 		                function(response) {
+		// 		                    console.log(response);
+		// 		                }
+		// 		            )
 
-        $scope.refresh = function() {
+		//     }
+		// 	);
+		// };
 
-            $http.get('api/category').then(
-                function(response) {
+		$scope.refresh = function () {
+			$http.get("api/category").then(function (response) {
+				$scope.categories = [{ id: 0, label: "All", references: 0 }];
+				response.data.forEach((d) => {
+					$scope.categories.push(d);
+				});
 
-                    $scope.categories = [{id: 0, label: "All", references: 0}];
-                    response.data.forEach(d => {
-                        $scope.categories.push(d);
-                    })
+				$http.get("api/favorite").then(function (response) {
+					console.log(response);
+					$scope.favorites = response.data.filter(
+						(f) =>
+							$scope.categoryFilter === 0 ||
+							f.category.id === $scope.selectedCategory
+					);
+				});
+			});
+		};
 
-                    $http.get('api/favorite').then(
-                        function(response) {
-                        console.log(response)   ;
-                            $scope.favorites = response.data.filter(f => $scope.categoryFilter === 0 || f.category.id === $scope.selectedCategory);
-                        }
-                    )
-                }
-            )
-        }
-
-        $scope.refresh();
-    });
+		$scope.refresh();
+	});

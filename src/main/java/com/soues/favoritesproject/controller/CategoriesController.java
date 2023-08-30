@@ -36,7 +36,7 @@ public class CategoriesController {
         return categoryService.findAll();
     }
 
-    @GetMapping(path = "/{category}")
+    @GetMapping(path = "/category/{category}")
     List<FavoriteItem> findByCategory(@PathVariable(name = "category") long id) {
         return favoriteService.findByCategory(id);
     }
