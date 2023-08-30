@@ -30,6 +30,16 @@ angular
 					category: $scope.realCategories[idx].id,
 				};
 			}
+//			else if (text === "delete") {
+//                $http.delete('/api/favorite/' + id).then(
+//                    function() {
+//                        $scope.refresh();
+//                              }, function(error) {
+//                                    alert(error.data.message);
+//                              }
+//                    )
+//			}
+
 			$scope.mode = text;
 		};
 
@@ -54,6 +64,34 @@ angular
 					}
 				);
 		};
+
+        $scope.delete = function(id) {
+        console.log(id);
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $http.delete('/api/favorite/' + id).then(
+                        function() {
+                            $scope.refresh();
+                                  }, function(error) {
+                                        alert(error.data.message);
+                                  }
+                    )
+                  Swal.fire(
+                  'Deleted!',
+                  'Your file has been deleted.',
+                  'success'
+                )
+              }
+            })
+        }
 
 		$scope.refresh = function () {
 			$http.get("api/category").then(function (response) {
