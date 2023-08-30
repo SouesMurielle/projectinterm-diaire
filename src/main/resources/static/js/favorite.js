@@ -34,6 +34,20 @@ angular
 			$scope.mode = text;
 		};
 
+		$scope.setUpdate = function (f) {
+		    $scope.realCategories = $scope.categories.filter(function(c) { return c.id !== 0 });
+		    var idx = $scope.realCategories.map(function(c) { return c.id }).indexOf($scope.category.filter);
+            if (idx < 0) idx = 0;
+
+            $scope.setMode('update');
+            $scope.favorite = {
+                id : f.id,
+                label : f.label,
+                link : f.link,
+                category: $scope.realCategories[idx].id
+            };
+		}
+
 		$scope.cancel = function () {
 			$scope.setMode("view");
 		};
@@ -55,6 +69,25 @@ angular
 					}
 				);
 		};
+
+		$scope.update = function() {
+		console.log($scope.favorite);
+            $http
+                .post("api/" + $scope.favorite.category + "/favorite", {
+                    id: $scope.favorite.id,
+                    label: $scope.favorite.label,
+                    link: $scope.favorite.link,
+                })
+                .then(
+                    function () {
+                        $scope.refresh();
+                        $scope.setMode("view");
+                    },
+                    function (error) {
+                        alert(error.data.message);
+                    }
+                );
+		}
 
         $scope.delete = function(id) {
             Swal.fire({

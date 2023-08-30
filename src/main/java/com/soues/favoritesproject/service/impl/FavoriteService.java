@@ -67,7 +67,7 @@ public class FavoriteService implements IFavoriteService  {
         Favorite favorite;
 
         if (definition.getId() != null) {
-            favorite = favoriteRepository.findById(categoryId)
+            favorite = favoriteRepository.findById(definition.getId())
                     .orElseThrow(() -> new NotFoundException("Pas trouvé"));
         } else {
             favorite = new Favorite();
