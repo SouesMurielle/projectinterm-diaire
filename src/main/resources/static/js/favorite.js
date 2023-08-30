@@ -5,7 +5,7 @@ angular
 		$scope.realCategories = [];
 		$scope.favorites = [];
 
-		$scope.category= {
+		$scope.category = {
 		    filter : 0
 		};
 
@@ -64,8 +64,8 @@ angular
 				});
 
 				$http.get("api/favorite").then(function (response) {
-					console.log(response);
-					console.log($scope.category.filter);
+//					console.log(response);
+//					console.log($scope.category.filter);
 					$scope.favorites = response.data.filter(
 						(f) =>
 							$scope.category.filter === 0 ||
@@ -77,8 +77,9 @@ angular
 
 
         $scope.format = function(item) {
-            return (item.label + (item.id != -1 ? ' (' + item.references + ')' : ''));
+            return (item.label + (item.id !== -1 ? ' (' + item.references + ')' : ''));
 //            return (item.label + (item.id != 0 ? ' (' + item.references + ')' : ''));
         }
+
 		$scope.refresh();
 	});
