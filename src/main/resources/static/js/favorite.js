@@ -30,15 +30,6 @@ angular
 					category: $scope.realCategories[idx].id,
 				};
 			}
-//			else if (text === "delete") {
-//                $http.delete('/api/favorite/' + id).then(
-//                    function() {
-//                        $scope.refresh();
-//                              }, function(error) {
-//                                    alert(error.data.message);
-//                              }
-//                    )
-//			}
 
 			$scope.mode = text;
 		};
@@ -66,7 +57,6 @@ angular
 		};
 
         $scope.delete = function(id) {
-        console.log(id);
             Swal.fire({
                 title: 'Are you sure?',
                 text: "You won't be able to revert this!",
