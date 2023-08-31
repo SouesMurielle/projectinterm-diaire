@@ -73,12 +73,14 @@ public class FavoriteService implements IFavoriteService  {
             favorite = new Favorite();
         }
 
-        favorite = new Favorite(definition.getId(), definition.getLabel(), definition.getLink(),
-                new Date(), category);
+        favorite.setCategory(category);
+        favorite.setLink(definition.getLink());
+        favorite.setLabel(definition.getLabel());
+        favorite.setDate(new Date());
+
         favorite = favoriteRepository.save(favorite);
 
-        return new FavoriteItem(favorite.getId(), favorite.getLabel(), favorite.getLink(),
-                new Date(), category);
+        return helper.toFavoriteItem(favorite);
     }
 
     @Override
