@@ -6,7 +6,6 @@ import com.soues.favoritesproject.dto.CategoryListItem;
 import com.soues.favoritesproject.dto.FavoriteItem;
 import com.soues.favoritesproject.persistence.entity.Category;
 import com.soues.favoritesproject.persistence.entity.Favorite;
-import com.soues.favoritesproject.persistence.repository.ICategoryRepository;
 import com.soues.favoritesproject.persistence.repository.IFavoriteRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,9 +13,6 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class DTOHelper {
-
-    @Autowired
-    private ICategoryRepository categoryRepository;
 
     @Autowired
     private IFavoriteRepository favoriteRepository;

@@ -6,7 +6,6 @@ import com.soues.favoritesproject.dto.CategoryListItem;
 import com.soues.favoritesproject.dto.FavoriteItem;
 import com.soues.favoritesproject.service.ICategoryService;
 import com.soues.favoritesproject.service.IFavoriteService;
-import com.soues.favoritesproject.utils.DTOHelper;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;

@@ -5,7 +5,6 @@ import com.soues.favoritesproject.dto.CategoryItem;
 import com.soues.favoritesproject.dto.CategoryListItem;
 import com.soues.favoritesproject.exception.NotFoundException;
 import com.soues.favoritesproject.persistence.entity.Category;
-import com.soues.favoritesproject.persistence.entity.Favorite;
 import com.soues.favoritesproject.persistence.repository.ICategoryRepository;
 import com.soues.favoritesproject.service.ICategoryService;
 import com.soues.favoritesproject.utils.DTOHelper;
@@ -32,12 +31,8 @@ public class CategoryService implements ICategoryService {
                 .stream()
                 .sorted(Comparator.comparing(Category::getLabel))
                 .map(helper::toCategoryToListItem)
-                .toList();
-//        return  categoryRepository.findAll()
-//                .stream()
-//                .sorted(Comparator.comparing(Category::getLabel))
 //                .map(category -> helper.toCategoryToListItem(category))
-//                .toList();
+                .toList();
     }
 
 
