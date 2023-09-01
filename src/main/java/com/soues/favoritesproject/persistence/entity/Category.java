@@ -22,7 +22,7 @@ public class Category {
 //    il serait plus "correct" de le faire en java dans le controller en
 //    important la liste des catégories avant d'en créer une
 //    ça sert notamment à renvoyer une exception java et pas mysql (grave mieux)
-    @Column(name = "label", nullable = false)
+    @Column(name = "label")
     private String label;
 
 }

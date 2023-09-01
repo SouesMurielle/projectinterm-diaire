@@ -1,7 +1,6 @@
 package com.soues.favoritesproject.controller;
 
 import com.soues.favoritesproject.dto.CategoryDefinition;
-import com.soues.favoritesproject.dto.CategoryItem;
 import com.soues.favoritesproject.dto.CategoryListItem;
 import com.soues.favoritesproject.dto.FavoriteItem;
 import com.soues.favoritesproject.service.ICategoryService;
@@ -17,7 +16,7 @@ import java.util.List;
 
 @RestController
 // indique que c'est un controller. Cette classe doit etre géré par Spring et elle exposera des services
-@RequestMapping(path = "/api")
+@RequestMapping(path = "/api/category")
 // sert à indiquer l'adresse de contact, à quelle adresse le service est appelable/joignable c'est le n point du service
 // associe toutes les requetes xxxMapping arrivent ici
 @CrossOrigin(origins = {"http://localhost:8080", "127.0.0.1:8080"})
@@ -30,18 +29,18 @@ public class CategoriesController {
     @Autowired
     private IFavoriteService favoriteService;
 
-    @GetMapping(path = "/category")
+    @GetMapping
     List<CategoryListItem> findAll() {
         return categoryService.findAll();
     }
 
-    @GetMapping(path = "/category/{category}")
+    @GetMapping(path = "/{category}")
     List<FavoriteItem> findByCategory(@PathVariable(name = "category") long id) {
         return favoriteService.findByCategory(id);
     }
 
     @PostMapping
-    CategoryItem save(@RequestBody CategoryDefinition category) {
+    CategoryListItem save(@RequestBody CategoryDefinition category) {
         return categoryService.save(category);
     }
 
@@ -51,7 +50,7 @@ public class CategoriesController {
             @ApiResponse(responseCode = "404", description = "The category was not found"),
             @ApiResponse(responseCode = "500", description = "The category could not be deleted")
     })
-    @DeleteMapping(path = "/category/{id}")
+    @DeleteMapping(path = "/{id}")
     @ResponseStatus(code = HttpStatus.OK)
     public void delete(@PathVariable long id) {
         categoryService.delete(id);

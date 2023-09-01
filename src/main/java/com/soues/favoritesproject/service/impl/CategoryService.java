@@ -1,7 +1,6 @@
 package com.soues.favoritesproject.service.impl;
 
 import com.soues.favoritesproject.dto.CategoryDefinition;
-import com.soues.favoritesproject.dto.CategoryItem;
 import com.soues.favoritesproject.dto.CategoryListItem;
 import com.soues.favoritesproject.exception.NotFoundException;
 import com.soues.favoritesproject.persistence.entity.Category;
@@ -44,9 +43,22 @@ public class CategoryService implements ICategoryService {
     }
 
     @Override
-    public CategoryItem save(CategoryDefinition category) {
-        Category entity = categoryRepository.save(helper.toCategory(category));
-        return helper.toCategoryItem(entity);
+    public CategoryListItem save(CategoryDefinition definition) {
+
+        Category category;
+
+        if (definition.getId() != null) {
+            category = categoryRepository.findById(definition.getId())
+                    .orElseThrow(() -> new NotFoundException("Pas trouvé"));
+        } else {
+            category = new Category();
+        }
+
+        category.setLabel(definition.getLabel());
+
+        category = categoryRepository.save(category);
+
+        return helper.toCategoryToListItem(category);
     }
 }
 // @Transactional indique que toutes les methodes que le service contient deviennent transactionnelles.
