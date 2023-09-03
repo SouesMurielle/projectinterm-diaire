@@ -7,8 +7,9 @@ import java.util.Date;
 
 @Entity
 // déclare à Spring que cette classe est une entité, une classe persistable donc à sauvegarder en base de données
-@Table(name = "favorite")
+@Table(name = "favorite", uniqueConstraints = {@UniqueConstraint(columnNames = {"link"})})
 // précise à quel élément de la base de donnée on veut asssocier l'entité
+//ajoute une contraint d'unicité, on ne pourra psa ajouter deux favoris avec le même lien (pas label)
 @Getter
 @Setter
 @ToString
