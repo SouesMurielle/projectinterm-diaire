@@ -32,6 +32,8 @@ angular
 
 		$scope.category = {};
 
+        $scope.favoritesToDelete = [];
+
 		$scope.setMode = function (text) {
 			if (text === "creationFavorite") {
 				$scope.realCategories = $scope.categories.filter(function (c) {
@@ -63,11 +65,9 @@ angular
 		};
 
 		$scope.refresh = function () {
-//            console.log($http.get("api/category").value);
 			$http.get("api/category").then(function (response) {
 				$scope.categories = [{ id: 0, label: "All", references: 0 }];
 				response.data.forEach((d) => {
-//				    console.log(d.label)
 					$scope.categories.push(d);
 					$scope.categories[0].references += d.references;
 				});
@@ -95,7 +95,6 @@ angular
 		    })
 		    .indexOf(f.category.id);
 //		    .indexOf($scope.categoryList.filter);
-		    console.log("idx : " + idx);
             if (idx < 0) idx = 0;
 
             $scope.setMode('updateFavorite');
@@ -122,7 +121,13 @@ angular
 						$scope.setMode("view");
 					},
 					function (error) {
-						alert(error.data.message);
+//						alert(error.data.message);
+                        Swal.fire({
+                            icon : 'error',
+                            title : 'Not created!',
+                            text : 'Your category hasn\'t been created.',
+                            footer : error.data.message
+                        });
 					}
 				);
 		};
@@ -140,7 +145,13 @@ angular
                         $scope.setMode("view");
                     },
                     function (error) {
-                        alert(error.data.message);
+//                        alert(error.data.message);
+                        Swal.fire({
+                            icon : 'error',
+                            title : 'Not updated!',
+                            text : 'Your category hasn\'t been updated.',
+                            footer : error.data.message
+                        });
                     }
                 );
 		}
@@ -161,20 +172,65 @@ angular
                             $scope.refresh();
                             Swal.fire(
                                 'Deleted!',
-                                'Your file has been deleted.',
+                                'Your favorite has been deleted.',
                                 'success'
                             )
                                   }, function(error) {
                                       alert(error.data.message);
-                                      Swal.fire(
-                                          'Not deleted!',
-                                          'Your file hasn\'t been deleted.',
-                                          'success'
-                                      )
+                                      Swal.fire({
+                                          icon : 'error',
+                                          title : 'Not deleted!',
+                                          text : 'Your category hasn\'t been deleted.',
+                                          footer : error.data.message
+                                      });
                                   }
                     )
               }
             })
+        }
+        
+        $scope.deleteMultiple = function() {
+            $scope.favoritesToDelete = $scope.favorites.filter( (f) => f.selected === true );
+            $scope.favoritesToDelete = $scope.favoritesToDelete.map((f) => f.id);
+            if ($scope.favoritesToDelete.length == 0) {
+                Swal.fire(
+                    'No favorite selected!',
+                    'Please select at least one favorite'
+                )
+
+            } else {
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "You won't be able to revert this!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, delete it!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $http
+                            .delete('api/favorite/' + $scope.favoritesToDelete.join('-'))
+                            .then(function() {
+                                $scope.refresh();
+                                Swal.fire(
+                                    'Deleted!',
+                                    'Yours favorites has been deleted.',
+                                    'success'
+                                )
+                            }, function(error) {
+//                               alert(error.data.message);
+                               Swal.fire({
+                                   icon : 'error',
+                                   title : 'Not deleted!',
+                                   text : 'Your category hasn\'t been deleted.',
+                                   footer : error.data.message
+                               });
+                           }
+                            );
+                  }
+                })
+            }
         }
 
         /* ----- CATEGORIES ----- */
@@ -182,8 +238,6 @@ angular
 		$scope.setUpdateCategory = function (cat) {
 
             $scope.setMode('updateCategory');
-            console.log("1/ " + cat);
-//            console.log("1/ " + $scope.categoryList);
 
             $scope.category = {
                 id : cat.id,
@@ -192,7 +246,6 @@ angular
 		}
 
 		$scope.createCategory = function () {
-//            console.log("1/ " + $scope.categoryList);
 			$http
 				.post("api/category", {
 					id: null,
@@ -204,7 +257,13 @@ angular
 						$scope.setMode("view");
 					},
 					function (error) {
-						alert(error.data.message);
+//						alert(error.data.message);
+                        Swal.fire({
+                            icon : 'error',
+                            title : 'Not created!',
+                            text : 'Your category hasn\'t been created.',
+                            footer : error.data.message
+                        });
 					}
 				);
 		};
@@ -221,7 +280,13 @@ angular
                         $scope.setMode("view");
                     },
                     function (error) {
-                        alert(error.data.message);
+//                        alert(error.data.message);
+                        Swal.fire({
+                            icon : 'error',
+                            title : 'Not updated!',
+                            text : 'Your category hasn\'t been updated.',
+                            footer : error.data.message
+                        });
                     }
                 );
 		}
@@ -243,16 +308,17 @@ angular
                             $scope.refresh();
                             Swal.fire(
                                 'Deleted!',
-                                'Your file has been deleted.',
+                                'Your category has been deleted.',
                                 'success'
                             );
                         }, function(error) {
 //                            alert(error.data.message);
-                            Swal.fire(
-                                'Impossible!',
-                                'Your file hasn\'t been deleted.',
-                                'fail'
-                            );
+                            Swal.fire({
+                                icon : 'error',
+                                title : 'Not deleted!',
+                                text : 'Your category hasn\'t been deleted.',
+                                footer : error.data.message
+                            });
                         }
                     );
                 }
