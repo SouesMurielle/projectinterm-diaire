@@ -86,7 +86,6 @@ angular
 		/* ----- FAVORITES ----- */
 
 		$scope.setUpdateFavorite = function (f) {
-            console.log("0/ " + $scope.categories);
 		    $scope.realCategories = $scope.categories.filter(function(c) {
 		    return c.id !== 0
 		    });
@@ -94,7 +93,9 @@ angular
 		    .map(function(c) {
 		    return c.id
 		    })
-		    .indexOf($scope.categoryList.filter);
+		    .indexOf(f.category.id);
+//		    .indexOf($scope.categoryList.filter);
+		    console.log("idx : " + idx);
             if (idx < 0) idx = 0;
 
             $scope.setMode('updateFavorite');
@@ -103,6 +104,7 @@ angular
                 id : f.id,
                 label : f.label,
                 link : f.link,
+//                category: f.category.id
                 category: $scope.realCategories[idx].id
             };
 		};
@@ -234,7 +236,7 @@ angular
                 cancelButtonColor: '#d33',
                 confirmButtonText: 'Yes, delete it!'
             }).then((result) => {
-            console.log(result);
+//            console.log(result);
                 if (result.isConfirmed) {
                     $http.delete('api/category/' + id).then(
                         function() {
